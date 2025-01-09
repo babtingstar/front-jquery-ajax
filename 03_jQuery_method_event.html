@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Title</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <style>
+        #hoverBox {
+            width: 100px;
+            height: 100px;
+            background-color: lemonchiffon;
+        }
+
+        #divBox {
+            width: 200px;
+            height: 200px;
+            background-color: aliceblue;
+        }
+
+        #plusCss{
+            background-color: orange;
+        }
+
+        #defaultCss{
+            background-color: aliceblue;
+        }
+    </style>
+</head>
+<body>
+<h1>이벤트 처리</h1>
+<button id="clickMe">클릭 이벤트</button>
+<div id="hoverBox">마우스 오버</div>
+<div id="clickCheck"></div>
+<script>
+    // document.ready(function(){}); 생략
+    $('#clickMe').click(function () {
+        $('#clickCheck').append('<p> 버튼이 클릭되었습니다.</p>'); // 클릭이 될 때 마다 글자 추가 append <p></p>
+    })
+
+    // 마우스 오버 이벤트
+    // $().hover( function{마우스가 태그로 왔을 때}, function{마우스가 태그를 떠났을 때})
+    $('#hoverBox').hover(
+        function () {
+            $(this).css('background', 'yellow');
+            // $('#hoverBox').css('background', 'yellow');
+        },
+        function () {
+            $(this).css('background', 'lemonchiffon');
+            // $('#hoverBox').css('background', 'lemonchiffon');
+        }
+    )
+</script>
+<button id="clickHere">클릭 이벤트</button>
+<div id="divBox"></div>
+<script>
+    /*
+    mouseleave = vanilla javascript
+
+    mouseenter =
+
+     */
+    $('#divBox').hover(function () {
+            $(this).addClass('.plusCss');
+        },
+        function () {
+            $(this).removeClass('.plusCss');
+        })
+
+    /*
+    마우스가 div 위로 올라왔을 때 orange 변형
+    div 박스를 떠났을 때 aliceblue 돌아오기
+     */
+    // $('#divBox').hover(
+    //     function () {
+    //         $(this).css('background-color', 'orange');
+    //     },
+    //     function () {
+    //         $(this).css('background-color', 'aliceblue');
+    //     }
+    // )
+</script>
+
+</body>
+</html>
