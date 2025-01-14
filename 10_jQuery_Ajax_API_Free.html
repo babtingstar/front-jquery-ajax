@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Title</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <style>
+        body {
+            text-align: center;
+        }
+
+        #btn {
+            margin: 50px;
+            padding: 10px;
+        }
+
+        #container {
+            margin: 50px;
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+<h1>랜덤 오리 이미지</h1> <!-- 제목 및 설명 -->
+<button id="btn">오리오리꽥꽥</button> <!-- 데이터를 가져올 수 있는 버튼 -->
+<div id="container"> <!-- 데이터를 출력할 공간(div) -->
+    <p>아무것도없어용</p>
+</div>
+<script>
+    $('#btn').click(
+        function f() {
+            const rand = Math.floor(Math.random() * 5) + 1;/* 5종류 랜덤*/
+            let rand_after
+            /*
+            API 에서 제공하는 사진의 경로가 100, 200, 301, 302, 400, 403.. 불규칙해서
+            임의로 5개를 지정하고 개중에 1개를 랜덤하게 뽑는 방식으로 진행하기 위해 switch 문 사용
+            */
+            switch (rand) {
+                case 1 :
+                    rand_after = 100;
+                    break;
+                case 2 :
+                    rand_after = 200;
+                    break;
+                case 3 :
+                    rand_after = 301;
+                    break;
+                case 4 :
+                    rand_after = 302;
+                    break;
+                case 5 :
+                    rand_after = 400;
+                    break;
+            }
+
+            $.ajax({
+                url: `https://random-d.uk/api/v2/random`,
+                method: 'GET',
+                dataType: 'JPG',
+                success: function (data) {
+                    $('#container').html(
+                        `
+                        <img src="${data.url}">
+                        `
+                    )
+                },
+                error: function (data) {
+                    $('#container').html("<p>오리오리 실패");
+                }
+            })
+        }
+    )
+</script>
+<!--
+선택한 API 이름      : Random-d.uk
+           URL       : https://random-d.uk/api
+           사용 이유 : 낮아보이는 구동 난이도
+-->
+</body>
+</html>

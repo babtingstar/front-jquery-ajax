@@ -2,8 +2,8 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>08_jQuery_Ajax_coinDesk.html</title>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <style>
         body {
@@ -82,45 +82,59 @@
     </style>
 </head>
 <body>
-<header>코인 조회 사이트</header>
+    <header>코인 조회 사이트</header>
+
 <div class="container">
     <h2>비트코인(BTC) 실시간 가격 조회</h2>
     <h4 id="nowTime">now time : </h4>
-    <p id="usdPrice"> USD: -- </p> <!-- 달러 가격 표시 -->
-    <p id="gbpPrice"> GBP: -- </p> <!-- 달러 가격 표시 -->
-    <p id="eurPrice"> EUR: -- </p> <!-- 달러 가격 표시 -->
+    <p id="usdPrice"> USD: -- </p> <!--달러 화폐 표기 -->
+    <p id="gbpPrice"> GBP: -- </p> <!--영국 화폐 표기 -->
+    <p id="eurPrice"> EUR: -- </p> <!--유럽 화폐 표기 -->
     <button id="refreshPrice">가격 새로고침</button>
     <p class="disclaimer">본 데이터는 CoinDesk API 에서 제공되며, 실시간 데이터의 정확성을 보장하지 않습니다.</p>
 </div>
 <script>
     function bitcoinPrice() {
         $.ajax({
-            url: "https://api.coindesk.com/v1/bpi/currentprice.json",
-            method: "GET",
+            url:"https://api.coindesk.com/v1/bpi/currentprice.json",
+            method:"GET",
             success:
-                function (data) {
-                    $("#nowTime").text(data.time.updated);
-                    // symbol 내에 작성되어 있는 "symbol":"%#36", &#36 d은 html 코드
-                    $("#usdPrice").html(`${data.bpi.USD.code} ${data.bpi.USD.symbol} : ${data.bpi.USD.rate}`)// 버튼을 누르면 usdPrice usd.rate 넣기
-                    $("#usdPrice").append(`<p>${data.bpi.USD.description}`);
-                    $("#gbpPrice").html(`${data.bpi.GBP.code} ${data.bpi.GBP.symbol} : ${data.bpi.GBP.rate}`)// 버튼을 누르면 gbpPrice gbp.rate 넣기
-                    $("#gbpPrice").append(`<p>${data.bpi.GBP.description}`);
-                    $("#eurPrice").html(`${data.bpi.EUR.code} ${data.bpi.EUR.symbol} : ${data.bpi.EUR.rate}`)// 버튼을 누르면 eurPrice eur.rate 넣기
-                    $("#eurPrice").append(`<p>${data.bpi.EUR.description}`);
-                },
-            error:
-                function () {
-                    alert("비트코인을 불러오는 데 실패했습니다. 다시 시도해주세요.");
-                }
-        })
+                        function (data) {
+                            $("#nowTime").text(data.time.updated); //현재는 영국시간 기준으로 시간 설정
+
+
+
+
+                        // symbol 내에 작성되어 있는  "symbol": "&#36;",   &#36; 은 html 코드 형식 .text 아니라 .html 형식으로 작성하기 가능
+                       //     $("#usdPrice").text(`${data.bpi.USD.symbol} : ${data.bpi.USD.rate}`)  // 버튼을 누르면 usdPrice usd.rate 넣기
+                            $("#usdPrice").html(`${data.bpi.USD.code} ${data.bpi.USD.symbol} : ${data.bpi.USD.rate}`) ; // 버튼을 누르면 usdPrice usd.rate 넣기
+                            $("#usdPrice").append(`<p>${data.bpi.USD.description}</p>`) ;
+
+
+                            $("#gbpPrice").html(`${data.bpi.GBP.code} ${data.bpi.GBP.symbol} : ${data.bpi.GBP.rate}`)  ;// 버튼을 누르면 usdPrice usd.rate 넣기
+                            $("#gbpPrice").append(`<p>${data.bpi.GBP.description}</p>`)  ;
+
+                            $("#eurPrice").html(`${data.bpi.EUR.code} ${data.bpi.EUR.symbol} : ${data.bpi.EUR.rate}`)  ;// 버튼을 누르면 usdPrice usd.rate 넣기
+                            $("#eurPrice").append(`<p>${data.bpi.EUR.description}</p>`)  ;
+                            //               gbpPrice gbp.rate 넣기
+                            //               eurPrice eur.rate 넣기
+                        },
+            error :
+                        function () {
+                            alert("비트코인을 불러오는데 실패했습니다. 다시 시도해주세요.");
+                        }
+        });
     }
 
     // 초기 가격 로딩
     bitcoinPrice();
-    // 버튼 클릭시 가격 새로고침
-    $("#refreshPrice").click(function () {
-        bitcoinPrice();
-    })
+    // 버튼 클릭 시 가격 새로고침
+    $("#refreshPrice").click(
+                                function (){
+                                    bitcoinPrice();
+                                }
+    )
+
 </script>
 </body>
 </html>
